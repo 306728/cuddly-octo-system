@@ -1,0 +1,9 @@
+n = int(input())
+
+for i in range(n):
+  if i == 0:
+    print(" " * n + "A")
+  elif i == n - 1:
+    print(" " + "A" * (2 * n - 1))
+  else: 
+    print(" " * (n - i) + "A" + " " * (2 * i - 1) + "A")
