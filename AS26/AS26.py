@@ -1,4 +1,4 @@
-f = open("file.txt", "r")
+f = open("/workspaces/cuddly-octo-system/AS26/file.txt", "r")
 L = f.readlines()
 
 s = 0
