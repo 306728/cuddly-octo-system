@@ -1,8 +1,6 @@
 prefixes = [["kibibyte", "mebibyte", "gibibyte", "tebibyte", "pebibyte", "exbibyte"],
             ["kilobyte", "megabyte", "gigabyte", "terabyte", "petabyte", "exabyte"]]
 
-selected_prefix = 0
-
 unit = input("Binary or decimal prefix: ").lower()
 
 if unit == "binary":
