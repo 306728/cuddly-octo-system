@@ -1,5 +1,5 @@
 import random, string
-f = open("/cuddly-octo-system/AS/AS11/file.txt", "w")
+f = open("/workspaces/cuddly-octo-system/AS/AS11/file.txt", "w")
 l = []
 p = []
 
