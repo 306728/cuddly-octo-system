@@ -17,4 +17,4 @@ def f(x, y, n):
     l.append(f"({y})^{n}")
     return "".join(l)
 
-print(f("x", "y", 4))
+print(f(input(), input(), int(input()))
