@@ -1,0 +1,17 @@
+l = ["V", "L", "D"]
+
+def convert(n):
+    d = []
+    c = []
+    for i in range(len(str(n))):
+        d.append(int(str(n)[len(str(n)) - 1 - i]))
+        c.append("")
+    for i in range(len(d)):
+        if d[i] // l[i] == 1:
+            if (d[i] - 5) == 4:
+                c["-1"] = "IV"
+        else:
+            c["-2"] = (d[i] // 5) * "V" + (d[i] - 5) * "I"
+        if d[i] // 50 == 1:
+            if (d[i] - 5) == 4:
+                c["-2"] = ""
