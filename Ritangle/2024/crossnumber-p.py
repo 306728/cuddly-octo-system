@@ -13,14 +13,18 @@ def solve():
         ac1 = a
         for b in primes:
             ac3 = b[::-1]
-            for i in range(10):
-                if (int(i) + int(ac3[0])) ** (1/2) // 1 == (int(i) + int(ac3[0])) ** (1/2):
-                    dn2 = int(i) + int(ac3[0])
-                    for j in range(10):
-                        if int(f"{ac3[1]}{j}") in triangle:
-                            dn4 = int(f"{ac3[1]}{j}")
-                            k = 0
-                            while dn4 * primes[0] < 1000 and str(dn4 * primes[0])[0] == str(ac1)[0]:
-                                dn1 = int(dn4 * primes[0])
-                                k += 1
+            if (int(ac1[1]) + int(ac3[0])) ** (1/2) // 1 == (int(ac1[1]) + int(ac3[0])) ** (1/2):
+                dn2 = int(f"{ac1[1]}{ac3[0]}")
+                for i in range(10):
+                    if int(f"{ac3[1]}{i}") in triangle:
+                        dn4 = int(f"{ac3[1]}{i}")
+                        k = 0
+                        while dn4 * primes[k] < 1000 and str(dn4 * primes[0])[0] == str(ac1)[0]:
+                            dn1 = int(dn4 * primes[k])
+                            k += 1
+                            for j in range(1, 10):
+                                if sum(int(x) for x in str(ac1)) + sum(int(x) for x in str(ac3)) + int(str(dn4)[1]) + sum(int(x) for x in str(dn1)[1:]) + j % 9 == 0:
+                                    ac5 = int(f"{str(dn1)[2]}{j}{str(dn4)[1]}")
+                                    return ac1, ac3, dn2, dn4, dn1, ac5
                                 
+print(solve())
