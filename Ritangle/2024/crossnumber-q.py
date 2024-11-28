@@ -1,4 +1,4 @@
-f = open("primes.txt")
+f = open("/workspaces/cuddly-octo-system/Ritangle/2024/primes.txt")
 
 primes = []
 palindromicprimes = []
@@ -16,7 +16,7 @@ def solve():
         ac1 = a
         for b in cubes:
             dn4 = b
-            for i in range(10):
+            for i in range(1, 4):
                 if int(f"{str(ac1)[1]}{i}") in primes:
                     dn2 = int(f"{str(ac1)[1]}{i}")
                     ac3 = int(f"{str(dn2)[1]}{str(dn4)[0]}")
