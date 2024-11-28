@@ -1,6 +1,6 @@
-f = open("squares.txt")
-g = open("primes.txt")
-h = open("triangles.txt")
+f = open("/workspaces/cuddly-octo-system/Ritangle/2024/squares.txt")
+g = open("/workspaces/cuddly-octo-system/Ritangle/2024/primes.txt")
+h = open("/workspaces/cuddly-octo-system/Ritangle/2024/triangle.txt")
 
 squares = [int(line.strip()) for line in f if len(line.strip()) == 3]
 primes = [int(line.strip()) for line in g if len(line.strip()) == 2]
