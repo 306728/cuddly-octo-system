@@ -1,0 +1,121 @@
+PROCEDURE PUSH(BYREF QUEUE:ARRAY OF INTEGER,X:INTEGER,Y:INTEGER,HEADPTR:INTEGER,TAILPTR:INTEGER,NUMELEMENTS:INTEGER)
+    QUEUE[TAILPTR,1]←X
+    QUEUE[TAILPTR,2]←Y
+    TAILPTR←TAILPTR+1
+    NUMELEMENTS←NUMELEMENTS+1
+ENDPROCEDURE
+
+PROCEDURE POP(BYREF QUEUE:ARRAY OF INTEGER,HEADPTR:INTEGER,NUMELEMENTS:INTEGER)
+    DECLARE EMPTYARR:ARRAY[1:2] OF INTEGER
+    QUEUE[HEADPTR]←EMPTYARR
+    HEADPTR←HEADPTR+1
+    NUMELEMENTS←NUMELEMENTS-1
+ENDPROCEDURE
+
+PROCEDURE MAIN()
+    DECLARE N,M:INTEGER
+    INPUT N
+    INPUT M
+    DECLARE GRID:ARRAY[1:N,1:M] OF CHAR
+    DECLARE I,J,STARTX,STARTY,ENDX,ENDY:INTEGER
+    FOR I←1 TO N
+        DECLARE ROW:STRING
+        INPUT ROW
+        FOR J←1 TO M
+            GRID[I,J]←MID(ROW,J,1)
+            IF GRID[I,J]="O" THEN
+                STARTX←I
+                STARTY←J
+            ENDIF
+            IF GRID[I,J]="X" THEN
+                ENDX←I
+                ENDY←J
+            ENDIF
+        NEXT J
+    NEXT I
+    DECLARE NUMELEMENTS,HEADPTR,TAILPTR:INTEGER
+    NUMELEMENTS←0
+    HEADPTR←1
+    TAILPTR←1
+    DECLARE QUEUE:ARRAY[1:200005,1:2] OF INTEGER
+    DECLARE DISTANCES:ARRAY[1:N,1:M] OF INTEGER
+    DECLARE PARENT:ARRAY[1:N,1:M,1:2] OF INTEGER
+    DECLARE DX,DY:ARRAY[1:4] OF INTEGER
+    DX[1]←-1
+    DX[2]←0
+    DX[3]←1
+    DX[4]←0
+    DY[1]←0
+    DY[2]←-1
+    DY[3]←0
+    DY[4]←1
+    FOR I←1 TO N
+        FOR J←1 TO M
+            DISTANCES[I,J]←-1
+        NEXT J
+    NEXT I
+    DISTANCES[STARTX,STARTY]←0
+    CALL PUSH(QUEUE,STARTX,STARTY,HEADPTR,TAILPTR,NUMELEMENTS)
+    DECLARE BREAK:BOOLEAN
+    BREAK←FALSE
+    WHILE NUMELEMENTS>0 AND NOT BREAK DO
+        DECLARE X,Y,CURRD:INTEGER
+        X←QUEUE[HEADPTR,1]
+        Y←QUEUE[HEADPTR,2]
+        CURRD←DISTANCES[X,Y]
+        CALL POP(QUEUE,HEADPTR,NUMELEMENTS)
+        IF X=ENDX AND Y=ENDY THEN
+            BREAK←TRUE
+        ENDIF
+        FOR I←1 TO 4
+            DECLARE NX,NY:INTEGER
+            NX←X+DX[I]
+            NY←Y+DY[I]
+            //OUTPUT "X: " & X
+            //OUTPUT "Y: " & Y
+            //OUTPUT "NX: " & NX
+            //OUTPUT "NY: " & NY
+            IF BREAK=FALSE AND NX>=1 AND NX<=N AND NY>=1 AND NY<=M AND DISTANCES[NX,NY]=-1 AND GRID[NX,NY]<>"#" THEN
+                DISTANCES[NX,NY]←CURRD+1
+                CALL PUSH(QUEUE,NX,NY,HEADPTR,TAILPTR,NUMELEMENTS)
+                PARENT[NX,NY,1]←X
+                PARENT[NX,NY,2]←Y
+                //OUTPUT "PUSHED: " & NX & " " & NY
+            ENDIF
+        NEXT I
+    ENDWHILE
+    IF DISTANCES[ENDX,ENDY]=-1 THEN
+        OUTPUT "NO"
+    ELSE
+        OUTPUT "YES"
+        DECLARE P:STRING
+        P←""
+        DECLARE PLEN:INTEGER
+        X←ENDX
+        Y←ENDY
+        PLEN←0
+        WHILE NOT(X=STARTX AND Y=STARTY) DO
+            NX←PARENT[X,Y,1]
+            NY←PARENT[X,Y,2]
+            IF (X=NX-1 AND Y=NY) THEN
+                P←"U"&P
+            ENDIF
+            IF (X=NX+1 AND Y=NY) THEN
+                P←"D"&P
+            ENDIF
+            IF (X=NX AND Y=NY-1) THEN
+                P←"L"&P
+            ENDIF
+            IF(X=NX AND Y=NY+1) THEN
+                P←"R"&P
+            ENDIF
+            X←NX
+            Y←NY
+            PLEN←PLEN+1
+        ENDWHILE
+        OUTPUT PLEN
+        OUTPUT P
+    ENDIF
+ENDPROCEDURE
+
+CALL MAIN()
